@@ -1,6 +1,6 @@
 `Code Explanation: main.c`
 
-This code performs the `FFT algorithm on an array of complex numbers`, x, `with N elements`.
+This code performs the `FFT algorithm on an array of complex numbers, x`, `with N elements`.
 > The FFT is a fast algorithm that can be used to compute the discrete Fourier transform (DFT) of a signal.
 
 In this case, the signal is assumed to be audio samples. The `FFT can be used to extract the frequencies present in the signal`, which is useful for speech recognition applications.
