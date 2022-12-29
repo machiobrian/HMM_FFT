@@ -12,7 +12,7 @@ typedef struct {
 
 // Function prototypes
 void fft(Complex *x, int N);
-void readAudioSamples(Complex *x, int N);
+void readAudioSamples(Complex *x, int N); //exercise...!!!!!
 
 int main(int argc, char **argv)
 {

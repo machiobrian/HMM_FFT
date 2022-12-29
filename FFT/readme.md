@@ -1,13 +1,18 @@
 `Code Explanation: main.c`
 
-This code performs the FFT algorithm on an array of complex numbers, x, with N elements. The FFT is a fast algorithm that can be used to compute the discrete Fourier transform (DFT) of a signal. In this case, the signal is assumed to be audio samples. The FFT can be used to extract the frequencies present in the signal, which is useful for speech recognition applications.
+This code performs the `FFT algorithm on an array of complex numbers`, x, `with N elements`.
+> The FFT is a fast algorithm that can be used to compute the discrete Fourier transform (DFT) of a signal.
 
-The FFT algorithm works by recursively splitting the input array into even and odd samples and then combining the results using a process called "butterfly operations." The resulting FFT output is a set of complex numbers that represent the frequency components of the input signal.
+In this case, the signal is assumed to be audio samples. The `FFT can be used to extract the frequencies present in the signal`, which is useful for speech recognition applications.
 
-The readAudioSamples() function is left as an exercise to the reader, as it will depend
+The FFT algorithm works by `recursively splitting the input array into even and odd samples and then combining the results using a process called "butterfly operations."` 
+
+ The resulting FFT output is a set of complex numbers that represent the frequency components of the input signal.
+
+* The readAudioSamples() function is left as an exercise to the reader, as it will depend
 
 `Code Explanation: main_1.c`
-The Fast Fourier Transform (FFT) is an efficient algorithm for computing the discrete Fourier transform (DFT) of a sequence. In speech recognition, the FFT can be used to convert a time-domain signal (such as an audio signal) into the frequency domain, which can then be used for further processing and analysis.
+The Fast Fourier Transform (FFT) is an efficient algorithm for computing the discrete Fourier transform (DFT) of a sequence.`In speech recognition, the FFT can be used to convert a time-domain signal (such as an audio signal) into the frequency domain, which can then be used for further processing and analysis.`
 
 Here is a sample code in C that demonstrates how to perform an FFT on a time-domain signal using the Kiss FFT library:
 
