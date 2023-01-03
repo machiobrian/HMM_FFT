@@ -2,13 +2,14 @@ import pandas as pd
 import numpy as np 
 from Prob_Vector import ProbabilityVector
 
+# instantiate PM by supplying a dictionary of PV's to the constructor of the class
 class ProbabilityMatrix:
     def __init__(self, prob_vec_dict):
         assert len(prob_vec_dict) > 1, \
             "The number of input prob vector must be > 1"
         assert len(set([str(x.states) for x in prob_vec_dict.values()])) == 1, \
             "All internal states of all the vectors must be identical"
-        assert len(prob_vec_dict.keys()) == len(set(prob_vec_dict.key())), \
+        assert len(prob_vec_dict.keys()) == len(set(prob_vec_dict.keys())), \
             "All observables must be unique"
 
         self.states = sorted(prob_vec_dict)
@@ -25,4 +26,28 @@ class ProbabilityMatrix:
         return cls(dict(zip(states, pvec)))
     
     @classmethod
-    
+    def from_numpy(cls, array:
+                np.ndarray,
+                states:list,
+                observables:list):
+        p_vecs = [ProbabilityVector(dict(zip(observables, x))) for x in array]
+        return cls(dict(zip(states, p_vecs)))
+
+    @property
+    def dict(self):
+        return self.df.to_dict()
+
+    @property
+    def df(self):
+        return pd.DataFrame(self.values,
+                            columns=self.observables,
+                            index=self.states)
+
+    def __repr__(self):
+        return "PM {} states: -> obs: {}.".format(self.values.shape, self.states, self.observables)
+
+    def __getitem__(self, observable:str) -> np.ndarray:
+        if observable not in self.observables:
+            raise ValueError("Requesting unknown probability observable from the Matrix. (own defined)")
+        index = self.observables.index(observable)
+        return self.values[:, index].reshape(-1,1)
