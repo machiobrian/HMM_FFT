@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd 
+#from Prob_Matrix import ProbabilityMatrix
 
 """
 Define objets that safeguard the mathematical properties.
@@ -80,8 +81,8 @@ class ProbabilityVector:
     def __matmul__(self, other) -> np.ndarray: # vector-matrix multiplication
         return self.__matmul__(other)
 
-    def __matmul__(self, other) -> np.ndarray:
-        if isinstance(other, ProbabilityMatrix):
+    def __matmul__(self, other) -> np.ndarray: 
+        if isinstance(other, ProbabilityMatrix): # not defined
             return self.values @ other.values
 
     # ndarray - represents both arrays and vectors

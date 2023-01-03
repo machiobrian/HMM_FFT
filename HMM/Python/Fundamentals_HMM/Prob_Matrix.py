@@ -44,10 +44,14 @@ class ProbabilityMatrix:
                             index=self.states)
 
     def __repr__(self):
-        return "PM {} states: -> obs: {}.".format(self.values.shape, self.states, self.observables)
+        return "PM {} states {}: -> obs: {}.".format(self.values.shape, self.states, self.observables)
 
     def __getitem__(self, observable:str) -> np.ndarray:
         if observable not in self.observables:
             raise ValueError("Requesting unknown probability observable from the Matrix. (own defined)")
         index = self.observables.index(observable)
         return self.values[:, index].reshape(-1,1)
+
+    # def __matmul__(self, other) -> np.ndarray: 
+    #     if isinstance(other, ProbabilityMatrix):
+    #         return self.values @ other.values

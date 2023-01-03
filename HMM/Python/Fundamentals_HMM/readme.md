@@ -8,5 +8,3 @@
 
 `practical bit that we will demostrate our performance using - Morning Insanity`
 > https://towardsdatascience.com/hidden-markov-model-implemented-from-scratch-72865bda430e
-
-
