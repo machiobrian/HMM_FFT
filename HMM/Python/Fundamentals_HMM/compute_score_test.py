@@ -13,7 +13,7 @@ chain X.
 from Prob_Matrix import ProbabilityMatrix
 from Prob_Vector import ProbabilityVector
 from compute_score import HiddenMarkovChain
-
+from itertools import product
 
 a1 = ProbabilityVector({'1H': 0.7, '2C':0.3})
 a2 = ProbabilityVector({'1H':0.4, '2C':0.6})
@@ -28,4 +28,17 @@ pi = ProbabilityVector({'1H':0.6, '2C':0.4})
 hmc = HiddenMarkovChain(A,B,pi)
 observations = ['1S', '2M', '3L', '2M', '1S']
 
-print("Score for {} is {:f}".format(observations, hmc.score(observations)))
+print("Score for {} is {:f}".format(observations, hmc.score(observations))) 
+# got 0.000115 for the first run
+
+# for a correct implementation, the score values for all possible obesrvations should 
+# add up to 1
+
+all_possible_observations = {'1S', '2M', '3L'}
+chain_length = 3 # actually any int > 0
+
+all_observation_chains = list(product(*(all_possible_observations,)*chain_length))
+all_possible_scores = list(map(lambda obs: hmc.score(obs), all_observation_chains))
+
+print("All possible scores added: {}".format(sum(all_possible_scores)))
+# we got an output of 0.294 != 1
