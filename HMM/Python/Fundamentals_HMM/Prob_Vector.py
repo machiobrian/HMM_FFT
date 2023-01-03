@@ -2,7 +2,6 @@
 
 import numpy as np
 import pandas as pd 
-#from Prob_Matrix import ProbabilityMatrix
 
 """
 Define objets that safeguard the mathematical properties.
