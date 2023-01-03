@@ -44,7 +44,7 @@ class HiddenMarkovChain:
         score = 0
         all_chains = self._create_all_chains(len(observations))
         for idx, chain in enumerate(all_chains):
-            expanded_chain = list(zip(chaink, [self.T.states[0] + list(chain)]))
+            expanded_chain = list(zip(chain, [self.T.states[0]] + list(chain)))
             expanded_obser = list(zip(observations, chain))
 
             p_observations = list(map(lambda x: self.E.df.loc[x[1], x[0]], expanded_obser))
@@ -52,6 +52,5 @@ class HiddenMarkovChain:
 
             p_hidden_state[0]  = self.pi[chain[0]]
 
-            score += reduce(mul, p_observations) * reduce(mul, p_hidden_states)
+            score += reduce(mul, p_observations) * reduce(mul, p_hidden_state)
             return score
-            
