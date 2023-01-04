@@ -14,6 +14,7 @@ from itertools import product
 from functools import reduce
 
 from Prob_Matrix import ProbabilityMatrix
+import numpy as np 
 
 class HiddenMarkovChain:
     def __init__(self, T,E,pi):
@@ -54,3 +55,36 @@ class HiddenMarkovChain:
 
             score += reduce(mul, p_observations) * reduce(mul, p_hidden_state)
             return score
+
+class HiddenMarkovChain_FP(HiddenMarkovChain):
+    def _alphas(self, observations:list) -> np.ndarray:
+        alphas = np.zeros((len(observations), len(self.states)))
+        alphas[0, :] = self.pi.values * self.E[observations[0]].T 
+
+        for t in range(1, len(observations)):
+            alphas[t, :] = (alphas[t-1, :].reshape(1,-1) @ self.T.values) * \
+                self.E[observations[t]].T
+            return alphas
+
+    def score(self, observations:list) -> float:
+        alphas = self._alphas(observations)
+        return float(alphas[-1].sum())
+
+class HiddenMarkovChain_Simulation(HiddenMarkovChain):
+    def run(self, length: int) -> (list, list):
+        assert length >= 0, "The chain needs to be a non-negative number."
+        s_history = [0] * (length + 1)
+        o_history = [0] * (length + 1)
+        
+        prb = self.pi.values
+        obs = prb @ self.E.values
+        s_history[0] = np.random.choice(self.states, p=prb.flatten())
+        o_history[0] = np.random.choice(self.observables, p=obs.flatten())
+        
+        for t in range(1, length + 1):
+            prb = prb @ self.T.values
+            obs = prb @ self.E.values
+            s_history[t] = np.random.choice(self.states, p=prb.flatten())
+            o_history[t] = np.random.choice(self.observables, p=obs.flatten())
+        
+        return o_history, s_history
