@@ -28,7 +28,9 @@ B = ProbabilityMatrix({'1H':b1, '2C':b2})
 pi = ProbabilityVector({'1H':0.6, '2C':0.4})
 
 hmc = HiddenMarkovChain(A,B,pi)
-observations = ['1S', '2M', '3L', '2M', '1S']
+
+
+observations = ['1S', '2M', '3L', '2M', '1S'] # comment out
 
 print("Score for {} is {:f}".format(observations, hmc.score(observations))) 
 # got 0.000115 for the first run
@@ -45,15 +47,13 @@ all_possible_scores = list(map(lambda obs: hmc.score(obs), all_observation_chain
 # print("All possible scores added: {}".format(sum(all_possible_scores)))
 # we got an output of 0.294 != 1
 
-#--------------------------------------------------------------------------------------#
-# Foward Pass.
+#-----------------------------------------------------------------#
 
-hmc_fp = HiddenMarkovChain_FP(A, B, pi)
-observations = ['1S', '2M', '3L', '2M', '1S']
-print("Score for {} is {:f}".format(observations, hmc_fp.score(observations)))
+# validating class expansion by generating some observable sequence O
 
-hmc_s = HiddenMarkovChain_Simulation(A, B, pi)
-observation_hist, states_hist = hmc_s.run(100)  # length = 100
-stats = pd.DataFrame({
-    'observations': observation_hist,
-    'states': states_hist}).applymap(lambda x: int(x[0])).plot()
+# from compute_score import HiddenMarkovChain_Uncover
+# np.random.seed(42)
+# hmc = HiddenMarkovChain_Uncover(A, B, pi)
+
+# observed_sequence, latent_sequence = hmc.run(5)
+# uncovered_sequence = hmc.uncover(observed_sequence)
