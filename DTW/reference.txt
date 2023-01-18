@@ -1,8 +1,0 @@
-	Medium File:
-
-	https://betterprogramming.pub/how-to-do-speech-recognition-with-a-dynamic-time-warping-algorithm-159c2a1bb83c
-
-
-	Code Projects:
-	https://www.codeproject.com/Articles/5820/Speech-Recognition
-	https://www.codeproject.com/Articles/11771/Voice-Command
