@@ -7,6 +7,13 @@
 
 #### Dynamic Programming
 
-* we are to find the minimum-cost path through matrix `dist_mat` using dynamic programming
+* we are to find the minimum-cost path through matrix `dist_matrix` using dynamic programming
 > Cost of a Path:
+
 Defined as the sum of the matrix entries on that path
+
+> The Sequence of Operation is as follows
+
+1. Define the shape of the signal x,y and visualize
+2. Define the distance matrix
+3. Define the Dynamic Time Warp - `path` and `cost` function and visualize
