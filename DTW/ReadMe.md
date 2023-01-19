@@ -17,3 +17,4 @@ Defined as the sum of the matrix entries on that path
 1. Define the shape of the signal x,y and visualize
 2. Define the distance matrix
 3. Define the Dynamic Time Warp - `path` and `cost` function and visualize
+4. Plot a distance and cost matrix subplot
