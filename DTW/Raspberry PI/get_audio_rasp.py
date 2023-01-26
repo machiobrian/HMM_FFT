@@ -2,6 +2,8 @@ import array
 import struct
 import os
 import wave 
+import csv
+
 
 def read_loaded_file(audio_path):
     # we are to open the .wav file
@@ -31,6 +33,10 @@ quant_audio = audio_sample
 for aud in range(len(quant_audio)):
     quant_audio[aud] = int(quant_audio[aud]/(2**15/quantization_level)) * (2**15/quantization_level)
 
-encod_audio = struct.pack("h"*len(quant_audio), *quant_audio)                                          
+encod_audio = struct.pack("h"*len(quant_audio), *quant_audio)
 
-encoded_sample = struct.pack("h"*len(quantized_sample), *quantized_sample)
+# we are going to write the encod_audio to a csv file without going the PWM path
+with open("encoded_output.csv", "w", newline="") as csvfile:
+    writer = csv.writer(csvfile)
+    for enc_aud in encod_audio:
+        writer.writerow([audio])
