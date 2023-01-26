@@ -7,8 +7,8 @@ import csv
 
 def read_loaded_file(audio_path):
     # we are to open the .wav file
-    wav_file = wave.open("path_to_audio_file", "rb")
-
+    wav_file = wave.open("audio_path", "rb")
+    
     # read audio samples from the audio file
     audio_sample = wav_file.readframes(wav_file.getnframes())
     wav_file.close()
