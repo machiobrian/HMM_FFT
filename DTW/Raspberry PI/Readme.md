@@ -12,7 +12,7 @@
 * Encoded audio must be in integer form.
 
 Order of use is as follows:
-1. `Get` ADC output from the raspberry pi `(file: rasp_adc.py)`
+1. `Get` ADC output from the raspberry pi `(file: get_audio_rasp.py)`
 
 2. `Load` the extracted values from step(1) into PWM pins of the raspberry pi (`file: load_pwm.py)` 
 

@@ -1,5 +1,6 @@
 # for audio operation
 pip install pyaudio
+pip install PyWave
 
 # to load the PWM values before visualizing
 # we need pigpio - control over GPIO
