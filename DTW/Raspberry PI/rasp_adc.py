@@ -24,7 +24,7 @@ arr_audio = array.array("h", audio_input) # convert audio_input into an array
 quant_audio = arr_audio # we proceed to quantize the audio samples
 
 for aud in range(len(quant_audio)):
-    quant_audio[aud] = int(quant_audio[aud]/(2**15/quantization_level)) * (2**15/quantization_level)
+    quant_audio[aud] = int((quant_audio[aud]/(2**15/quantization_level)) * (2**15/quantization_level))
 
 encod_audio = struct.pack("h"*len(quant_audio), *quant_audio)                                          
 

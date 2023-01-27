@@ -31,7 +31,7 @@ quantization_level = 16
 quant_audio = audio_sample
 
 for aud in range(len(quant_audio)):
-    quant_audio[aud] = int(quant_audio[aud]/(2**15/quantization_level)) * (2**15/quantization_level)
+    quant_audio[aud] = int((quant_audio[aud]/(2**15/quantization_level)) * (2**15/quantization_level))
 
 encod_audio = struct.pack("h"*len(quant_audio), *quant_audio)
 
