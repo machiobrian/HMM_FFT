@@ -40,3 +40,8 @@ Encoded PCM data can be stored in a variety of file formats: mp3 wav pcm aiff.
 4. `DTW Process`
 	* define the DTW function `[DONE]`
 	* load the audio to be investigates | `ALT: use the array data from step(3) `
+
+
+### Challenges:
+1. Extracting sampling frequency direclty from audio using our function:
+Remedy - Redefine Function
