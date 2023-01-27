@@ -19,19 +19,24 @@ Defined as the sum of the matrix entries on that path
 3. Define the Dynamic Time Warp - `path` and `cost` function and visualize
 4. Plot a distance and cost matrix subplot
 
+#### DTW_PCM Project
+1. fetch the audio data - audio signal
+2. `PCM Process`
+	* sample the analog signal at regular intervals - `44100 Hz/ any other`
+	* quantize the amplitude of the signal
+	* encode the resulting signal into a binary format.
+		* that can be stored and transmitted as digital data
 
-Dynamic Time Warping Notebook
-=============================
+PCM data is a sequence of digital samples - represents the amplitude of a signal at a specific point.
+Each sample is a specific number of bits - 8,16,24:
+**bits per sample represent the quantization levels and therefore the resolution of PCM data**
+8-bit - 256 levels
+16-bit - 65536 levels
 
-Overview
---------
-This repository provides the [notebook](dtw.ipynb) used for my lectures on
-dynamic time warping provided on [this YouTube
-playlist](https://www.youtube.com/playlist?list=PLmZlBIcArwhMJoGk5zpiRlkaHUqy5dLzL).
+Encoded PCM data can be stored in a variety of file formats: mp3 wav pcm aiff.
+`PCM representation is lossless`
 
-
-License
--------
-Herman Kamper, 2021.
-This work is released under a Creative Commons Attribution-ShareAlike
-license ([CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)).
+3. Convert the encoded data into an array format
+4. `DTW Process`
+	* define the DTW function `[DONE]`
+	* load the audio to be investigates | `ALT: use the array data from step(3) `
