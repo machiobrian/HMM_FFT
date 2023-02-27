@@ -9,14 +9,12 @@ from python_speech_features import mfcc
 # function to parse input arguments
 def build_arg_parser():
     parser = argparse.ArgumentParser(
-        description="Trains the HMM Classifier"
-    )
+        description="Trains the HMM Classifier")
     parser.add_argument(
         "--input-folder",
         dest="input_folder",
         required=True,
-        help="Input folder containing the audio files in subfolders"
-    )
+        help="Input folder containing the audio files in subfolders")
     return parser
 
 # define a class to model HMMs
@@ -49,8 +47,8 @@ class HMMTrainer(object):
     
 if __name__=='__main__':
     args = build_arg_parser().parse_args()
-    input_folder = argparse.input_folder
-
+    input_folder = args.input_folder
+    
     hmm_models = [] # initiate a variable to hold all the hmm models
 
     # parse the input dir
@@ -94,27 +92,29 @@ if __name__=='__main__':
 
     # test files
     input_files = [
+        '/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_0.wav',
+        '/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_1.wav'
         #links to test files
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_0.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_1.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_2.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_3.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_0.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_1.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_2.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_3.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_0.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_1.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_2.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_3.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_0.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_1.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_2.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_3.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_0.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_1.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_2.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_3.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_0.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_1.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_2.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_ac_3.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_0.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_1.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_2.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_bilgileri_3.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_0.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_1.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_2.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/demo_fider_kapat_3.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_0.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_1.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_2.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/gsm_durumu_3.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_0.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_1.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_2.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/custom_commands/nem_durumu_3.wav"
     ]
 
     # classify the input data
@@ -126,7 +126,7 @@ if __name__=='__main__':
         mfcc_features = mfcc(audio, sampling_frequency, nfft=1200)
 
         # define variabes
-        max_score = None
+        max_score = 0.0 # initially None
         output_label = None
 
         # iterate through all HMM Models and pick the one with the highest score
