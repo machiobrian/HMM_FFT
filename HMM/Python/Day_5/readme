@@ -14,3 +14,12 @@ Handle them step by step: from `extract frequency features to synthesize music`
 
 ### Look into:
 - extract the label: __main__ fnx: main.ipynb: HMM
+
+~~~~
+X = Initialize variables : main.ipynb
+ValueError: Expected 2D array, got 1D array instead:
+array=[].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+~~~~
+
+* Fit expects a 2D array.
