@@ -10,3 +10,7 @@ Handle them step by step: from `extract frequency features to synthesize music`
 - increased nfft to avoid truncation the default is `512`
 
 - Fourier transform is a mathematical formula that transforms a signal sampled in `time or space` to the same signal sampled in `temporal or spatial frequency.`
+
+
+### Look into:
+- extract the label: __main__ fnx: main.ipynb: HMM
