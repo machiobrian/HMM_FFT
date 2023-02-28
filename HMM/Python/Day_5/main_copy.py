@@ -5,6 +5,7 @@ we intend to test this one out on the original dataset
 # input-folder : /home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio
 import os
 import argparse
+import librosa
 
 import numpy as np 
 from scipy.io import wavfile
@@ -25,7 +26,7 @@ def build_arg_parser():
 # define a class to model HMMs
 
 class HMMTrainer(object):
-    def __init__(self,model_name='GaussianHMM', n_components=4, cov_type='diag', n_iter=5000):
+    def __init__(self,model_name='GaussianHMM', n_components=3, cov_type='diag', n_iter=5000):
         self.model_name = model_name
         self.n_components = n_components
         self.cov_type = cov_type
@@ -51,8 +52,9 @@ class HMMTrainer(object):
         return self.model.score(input_data)
     
 if __name__=='__main__':
-    args = build_arg_parser().parse_args()
-    input_folder = args.input_folder
+    # args = build_arg_parser().parse_args()
+    # input_folder = args.input_folder
+    input_folder = "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio"
     
     hmm_models = [] # initiate a variable to hold all the hmm models
 
@@ -77,14 +79,21 @@ if __name__=='__main__':
             filepath = os.path.join(subfolder, filename)
             sampling_frequency, audio = wavfile.read(filepath)
 
+            # normalize the audio
+            # audio = (audio - np.mean(audio, axis=0) / np.std(audio, axis=0))
+            
+
             # extract the mfcc features
-            mfcc_features = mfcc(audio, sampling_frequency,nfft=512)
+            audio, sampling_frequency = librosa.core.load(filepath, dtype=np.float32)
+            mfcc_features = librosa.feature.mfcc(y=audio, sr=sampling_frequency)
+            print(mfcc_features)
+            
 
             # append to the X variable
             if len(X) == 0:
                 X = mfcc_features
             else:
-                X = np.append(X, mfcc_features, axis=0)
+                X = np.append(X, mfcc_features)
 
             # Append the label
             y_words.append(label)
@@ -107,18 +116,21 @@ if __name__=='__main__':
     for input_file in input_files:
         # read & extract from the input files
         sampling_frequency, audio_data = wavfile.read(input_file)
-
+        
+        audio_data = (audio_data - np.mean(audio_data, axis=0)/ np.std(audio_data, axis=0))
+        
         # extract mfcc features
         mfcc_features = mfcc(audio_data, sampling_frequency, nfft=512)
         
 
         # define variabes
-        max_score = 0.0 # initially None
+        max_score = 0 # initially None
         output_label = "unknown"
 
         # iterate through all HMM Models and pick the one with the highest score
         for item in hmm_models:
             hmm_model, label = item 
+            print(label)
             score = hmm_model.get_score(mfcc_features)
             if score > max_score:
                 max_score = score 
@@ -127,4 +139,4 @@ if __name__=='__main__':
 
         # Print the output
         print("\nTrue:", input_file[input_file.rfind('/')+1:input_file.rfind('.')])
-        print("Predicted:", output_label)    
+        print("Predicted:", label)    

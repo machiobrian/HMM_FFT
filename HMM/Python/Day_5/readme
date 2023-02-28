@@ -23,3 +23,5 @@ Reshape your data either using array.reshape(-1, 1) if your data has a single fe
 ~~~~
 
 * Fit expects a 2D array.
+
+We are dividing by max_abs = 1: this has no effect, find a better way to normalize.
