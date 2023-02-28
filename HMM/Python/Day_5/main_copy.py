@@ -71,14 +71,6 @@ if __name__=='__main__':
         X = np.array([])
         y_words = []
 
-        # define a function to normalize audio data
-        def normalize_audio(audio):
-            # get the mac abs value
-            max_abs = np.max(np.abs(audio))
-            print(max_abs)
-            # divide audio data by max_abs to normalize the audio data
-            return audio / max_abs
-
         # Iterate through audio files leaving 1 file for testing in each class
         for filename in [x for x in os.listdir(subfolder) if x.endswith('.wav')][:-1]:
             # read the input file and extract the sampling freq and audio_data
@@ -127,9 +119,7 @@ if __name__=='__main__':
         # iterate through all HMM Models and pick the one with the highest score
         for item in hmm_models:
             hmm_model, label = item 
-            # print(label) # --------------------------------
             score = hmm_model.get_score(mfcc_features)
-            # print(score)
             if score > max_score:
                 max_score = score 
                 output_label = label
