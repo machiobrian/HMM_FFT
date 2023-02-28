@@ -1,4 +1,8 @@
-# input-folder : /home/ix502iv/Documents/Audio_Trad/HMM/hmm_commands
+"""
+we intend to test this one out on the original dataset
+"""
+
+# input-folder : /home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio
 import os
 import argparse
 
@@ -21,7 +25,7 @@ def build_arg_parser():
 # define a class to model HMMs
 
 class HMMTrainer(object):
-    def __init__(self,model_name='GaussianHMM', n_components=4, cov_type='diag', n_iter=1000):
+    def __init__(self,model_name='GaussianHMM', n_components=4, cov_type='diag', n_iter=5000):
         self.model_name = model_name
         self.n_components = n_components
         self.cov_type = cov_type
@@ -61,10 +65,19 @@ if __name__=='__main__':
 
         # extract the label : another important concept
         label = subfolder[subfolder.rfind('/') + 1:]
+        # print(label)
 
         # initialize variables
         X = np.array([])
         y_words = []
+
+        # define a function to normalize audio data
+        def normalize_audio(audio):
+            # get the mac abs value
+            max_abs = np.max(np.abs(audio))
+            print(max_abs)
+            # divide audio data by max_abs to normalize the audio data
+            return audio / max_abs
 
         # Iterate through audio files leaving 1 file for testing in each class
         for filename in [x for x in os.listdir(subfolder) if x.endswith('.wav')][:-1]:
@@ -73,7 +86,7 @@ if __name__=='__main__':
             sampling_frequency, audio = wavfile.read(filepath)
 
             # extract the mfcc features
-            mfcc_features = mfcc(audio, sampling_frequency,nfft=1200)
+            mfcc_features = mfcc(audio, sampling_frequency,nfft=512)
 
             # append to the X variable
             if len(X) == 0:
@@ -83,39 +96,44 @@ if __name__=='__main__':
 
             # Append the label
             y_words.append(label)
-        print('X.shape = ', X.shape)
+            # print('X.shape = ', X.shape)
 
         # Train and Save HMM model
         hmm_trainer = HMMTrainer()
         hmm_trainer.train(X)
         hmm_models.append((hmm_trainer, label))
+        # free up memory
         hmm_trainer = None
 
     # test files
     input_files = [
-        "/home/ix502iv/Documents/Audio_Trad/HMM/hmm_commands/demo-fider-ac/demo-fider-ac05.wav"
+        "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/apple/apple.wav",
+        "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/banana/banana.wav"
     ]
 
     # classify the input data
     for input_file in input_files:
-        print(input_file)
         # read & extract from the input files
         sampling_frequency, audio_data = wavfile.read(input_file)
 
         # extract mfcc features
-        mfcc_features = mfcc(audio_data, sampling_frequency, nfft=1200)
+        mfcc_features = mfcc(audio_data, sampling_frequency, nfft=512)
+        
 
         # define variabes
         max_score = 0.0 # initially None
-        output_label = None
+        output_label = "unknown"
 
         # iterate through all HMM Models and pick the one with the highest score
         for item in hmm_models:
             hmm_model, label = item 
+            # print(label) # --------------------------------
             score = hmm_model.get_score(mfcc_features)
+            # print(score)
             if score > max_score:
                 max_score = score 
                 output_label = label
+                
 
         # Print the output
         print("\nTrue:", input_file[input_file.rfind('/')+1:input_file.rfind('.')])
