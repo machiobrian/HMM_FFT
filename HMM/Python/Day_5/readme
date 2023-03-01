@@ -25,3 +25,7 @@ Reshape your data either using array.reshape(-1, 1) if your data has a single fe
 * Fit expects a 2D array.
 
 We are dividing by max_abs = 1: this has no effect, find a better way to normalize.
+
+This is a speech recognition script using HMMs (Hidden Markov Models) to recognize spoken words from audio files. The script trains an HMM for each word in the training dataset and then classifies input audio files by computing the likelihood of the audio data under each of the HMM models and selecting the word associated with the HMM that gave the highest score.
+
+The script reads audio files in the input folder, normalizes the audio data, extracts MFCC (Mel-Frequency Cepstral Coefficients) features from the audio data, trains HMMs for each word in the dataset, and then classifies new audio files by computing the likelihood of the audio data under each of the HMM models.

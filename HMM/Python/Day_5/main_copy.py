@@ -54,24 +54,28 @@ class HMMTrainer(object):
 if __name__=='__main__':
     # args = build_arg_parser().parse_args()
     # input_folder = args.input_folder
-    input_folder = "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio"
+    input_folder = "/home/ix502iv/Documents/Audio_Trad/HMM/hmm_commands"
     
     hmm_models = [] # initiate a variable to hold all the hmm models
-
+    dir_name = []
     # parse the input dir
     for dirname in os.listdir(input_folder):
         # get the name/link of the subfolder
         subfolder = os.path.join(input_folder, dirname)
+        dir_name.append(subfolder)
         if not os.path.isdir(subfolder): # if not a dir, pass/skip it
             continue
 
         # extract the label : another important concept
         label = subfolder[subfolder.rfind('/') + 1:]
-        # print(label)
+        
+        y_words = []
+        y_words.append(label)
+        # print(y_words)
 
         # initialize variables
         X = np.array([])
-        y_words = []
+        # y_words = []
 
         # Iterate through audio files leaving 1 file for testing in each class
         for filename in [x for x in os.listdir(subfolder) if x.endswith('.wav')][:-1]:
@@ -86,30 +90,32 @@ if __name__=='__main__':
             # extract the mfcc features
             audio, sampling_frequency = librosa.core.load(filepath, dtype=np.float32)
             mfcc_features = librosa.feature.mfcc(y=audio, sr=sampling_frequency)
-            print(mfcc_features)
+            
             
 
             # append to the X variable
             if len(X) == 0:
                 X = mfcc_features
+                
             else:
                 X = np.append(X, mfcc_features)
 
             # Append the label
-            y_words.append(label)
-            # print('X.shape = ', X.shape)
+            # y_words.append(label)
+            
 
         # Train and Save HMM model
         hmm_trainer = HMMTrainer()
-        hmm_trainer.train(X)
-        hmm_models.append((hmm_trainer, label))
+        hmm_trainer.train(X.reshape(-1,1)) # did a reshape
+        hmm_models.append((hmm_trainer, y_words))
         # free up memory
         hmm_trainer = None
 
     # test files
     input_files = [
-        "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/apple/apple.wav",
-        "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/banana/banana.wav"
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/banana/banana.wav",
+        # "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/apple/apple.wav"
+        "/home/ix502iv/Documents/Audio_Trad/HMM/hmm_commands/demo-fider-ac/demo-fider-ac05.wav"
     ]
 
     # classify the input data
@@ -147,11 +153,8 @@ if __name__=='__main__':
 
         
         
-
-        # define variabes
-        max_score = 0 # initially None
-        output_label = "unknown"
-
+        
+        
                 
 
-        # Print the output
+        # Print the output   
