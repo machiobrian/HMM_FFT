@@ -114,29 +114,44 @@ if __name__=='__main__':
 
     # classify the input data
     for input_file in input_files:
-        # read & extract from the input files
-        sampling_frequency, audio_data = wavfile.read(input_file)
+        # read & extract from the input files || second part makes use of librosa
+        audio_data, sampling_frequency_sample = librosa.core.load(input_file, dtype=np.float32)
+        # sampling_frequency, audio_data = wavfile.read(input_file)
         
-        audio_data = (audio_data - np.mean(audio_data, axis=0)/ np.std(audio_data, axis=0))
+        # normalize
+        # audio_data = (audio_data - np.mean(audio_data, axis=0)/ np.std(audio_data, axis=0))
+         
+        # extract mfcc features || second part makes use of librosa
+        # mfcc_features_sample = mfcc(audio_data, sampling_frequency, nfft=512)
+        mfcc_features_sample = librosa.feature.mfcc(
+            y=audio_data,
+            sr=sampling_frequency_sample
+        )
+
         
-        # extract mfcc features
-        mfcc_features = mfcc(audio_data, sampling_frequency, nfft=512)
+
+
+    # iterate through all HMM Models and pick the one with the highest score and its corresponding label
+    scores = []
+    corresponding_label = []
+
+    for model,y_words in hmm_models:
+        score = np.abs(model.get_score(mfcc_features_sample))
+        scores.append(score)
+        corresponding_label.append(y_words)
+
+    # find the max value of the score
+    np.amax(scores)
+    # with maximum get the corresponding label: y_words
+
+
+        
         
 
         # define variabes
         max_score = 0 # initially None
         output_label = "unknown"
 
-        # iterate through all HMM Models and pick the one with the highest score
-        for item in hmm_models:
-            hmm_model, label = item 
-            print(label)
-            score = hmm_model.get_score(mfcc_features)
-            if score > max_score:
-                max_score = score 
-                output_label = label
                 
 
         # Print the output
-        print("\nTrue:", input_file[input_file.rfind('/')+1:input_file.rfind('.')])
-        print("Predicted:", label)    
