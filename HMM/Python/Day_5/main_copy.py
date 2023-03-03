@@ -54,7 +54,7 @@ class HMMTrainer(object):
 if __name__=='__main__':
     # args = build_arg_parser().parse_args()
     # input_folder = args.input_folder
-    input_folder = "/home/ix502iv/Documents/Audio_Trad/HMM/hmm_commands"
+    input_folder = "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine"
     
     hmm_models = [] # initiate a variable to hold all the hmm models
     dir_name = []
@@ -113,9 +113,11 @@ if __name__=='__main__':
 
     # test files
     input_files = [
-        # "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/banana/banana.wav",
-        # "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/apple/apple.wav"
-        "/home/ix502iv/Documents/Audio_Trad/HMM/hmm_commands/demo-fider-ac/demo-fider-ac05.wav"
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/demo-fider-ac/demofiderac.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/demo-fider-bilgileri/demofiderbilgileri.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/demo-fider-kapat/demofiderkapat.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/gsm-durumu/gsmdurumu01.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/nem-durumu/nemdurumu.wav"
     ]
 
     # classify the input data
@@ -133,28 +135,19 @@ if __name__=='__main__':
             y=audio_data,
             sr=sampling_frequency_sample
         )
+        # Define variables
+        max_score = float('-inf')
+        output_label = None
 
-        
+        # Iterate through all HMM models and pick 
+        # the one with the highest score
+        for item in hmm_models:
+            hmm_model, label = item
+            score = hmm_model.get_score(mfcc_features_sample)
+            if score > max_score:
+                max_score = score
+                output_label = label
 
-
-    # iterate through all HMM Models and pick the one with the highest score and its corresponding label
-    scores = []
-    corresponding_label = []
-
-    for model,y_words in hmm_models:
-        score = np.abs(model.get_score(mfcc_features_sample))
-        scores.append(score)
-        corresponding_label.append(y_words)
-
-    # find the max value of the score
-    np.amax(scores)
-    # with maximum get the corresponding label: y_words
-
-
-        
-        
-        
-        
-                
-
-        # Print the output   
+        # Print the output
+        print("True:", input_file[input_file.rfind('/')+1:input_file.rfind('.')])
+        print("Predicted:", output_label)       
