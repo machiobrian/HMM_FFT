@@ -40,7 +40,7 @@ class HMMTrainer(object):
 if __name__=='__main__':
     # args = build_arg_parser().parse_args()
     # input_folder = args.input_folder
-    input_folder = "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio"
+    input_folder = "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine"
 
     hmm_models = []
 
@@ -86,15 +86,13 @@ if __name__=='__main__':
 
     # Test files
     input_files = [
-            # '/home/ix502iv/Documents/Audio_Trad/HMM/hmm_commands/demo-fider-bilgileri/demo-fider-bilgileri02.wav',
-            "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/banana/banana.wav",
-            "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/apple/apple.wav",
-            "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/apple/apple15.wav",
-            "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/banana/banana15.wav",
-            "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/kiwi/kiwi15.wav",
-            "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/pineapple/pineapple15.wav",
-            "/home/ix502iv/Documents/Audio_Trad/HMM/Python/Day_5/data/audio/peach/peach15.wav"
-
+                      
+            
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/demo-fider-ac/demofiderac.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/demo-fider-bilgileri/demofiderbilgileri.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/demo-fider-kapat/demofiderkapat.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/gsm-durumu/gsmdurumu01.wav",
+            "/home/ix502iv/Documents/Audio_Trad/HMM/commandsmachine/nem-durumu/nemdurumu.wav"
         ]
 
     # Classify input data
